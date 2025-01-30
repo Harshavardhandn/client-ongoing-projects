@@ -2,6 +2,7 @@ import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, DollarSign, User } from "lucide-react";
+import { ChatModal } from "./ChatModal";
 
 interface ProjectCardProps {
   project: {
@@ -33,9 +34,12 @@ export const ProjectCard = ({ project, onViewDetails }: ProjectCardProps) => {
       </div>
 
       <div className="space-y-4">
-        <div className="flex items-center text-gray-600">
-          <User className="w-4 h-4 mr-2" />
-          <span>{project.freelancer}</span>
+        <div className="flex items-center justify-between text-gray-600">
+          <div className="flex items-center">
+            <User className="w-4 h-4 mr-2" />
+            <span>{project.freelancer}</span>
+          </div>
+          <ChatModal freelancerName={project.freelancer} />
         </div>
 
         <div className="space-y-2">
