@@ -1,8 +1,9 @@
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, DollarSign, User } from "lucide-react";
+import { Calendar, DollarSign, User, CheckCircle, XCircle } from "lucide-react";
 import { ChatModal } from "./ChatModal";
+import { toast } from "sonner";
 
 interface ProjectCardProps {
   project: {
@@ -25,6 +26,14 @@ const statusConfig = {
 
 export const ProjectCard = ({ project, onViewDetails }: ProjectCardProps) => {
   const status = statusConfig[project.status];
+
+  const handleReleasePayment = () => {
+    toast.success(`Payment of $${project.budget.toLocaleString()} released to ${project.freelancer}`);
+  };
+
+  const handleRejectProject = () => {
+    toast.error(`Project rejected. ${project.freelancer} has been notified.`);
+  };
 
   return (
     <div className="bg-white rounded-lg shadow-md p-6 transition-all duration-300 hover:shadow-lg">
@@ -67,6 +76,27 @@ export const ProjectCard = ({ project, onViewDetails }: ProjectCardProps) => {
         >
           View Details
         </Button>
+
+        {project.status === "completed" && (
+          <div className="grid grid-cols-2 gap-2 mt-2">
+            <Button
+              onClick={handleReleasePayment}
+              className="bg-green-500 hover:bg-green-600"
+              size="sm"
+            >
+              <CheckCircle className="w-4 h-4 mr-2" />
+              Release Payment
+            </Button>
+            <Button
+              onClick={handleRejectProject}
+              variant="destructive"
+              size="sm"
+            >
+              <XCircle className="w-4 h-4 mr-2" />
+              Reject Project
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   );
